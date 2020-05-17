@@ -1,0 +1,15 @@
+h3 {
+	color: blue;
+}
+
+body {
+	background-color: #D8D8D8;
+}
+
+div.visible {
+	display: none;
+}
+
+#accessError {
+	color: red;
+}
