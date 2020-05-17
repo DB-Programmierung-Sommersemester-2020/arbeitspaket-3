@@ -4,36 +4,33 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-
 public class DBProperties {
 
-    private String propertiesPath="./../../properties/db.properties";
+	private String propertiesPath = "./../../properties/db.properties";
+	private static DBProperties instance = null;
 
-    private void initProperties(String path) {
-        propertiesPath = path;
-        InputStream inputStream = getClass().getResourceAsStream(propertiesPath);
-        Properties properties = new Properties();
-        try {
-            properties.load(inputStream);
-            URL=properties.getProperty("URL");
-            PORT=properties.getProperty("PORT");
-            DATABASE=properties.getProperty("DATABASE");
-            USER_NAME=properties.getProperty("USER_NAME");
-            USER_PASSWORD = properties.getProperty("USER_PASSWORD");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	private DBProperties() {
+		initProperties(propertiesPath);
+	}
 
-    public DBProperties() {
-        initProperties(propertiesPath); 
-    }
+	private void initProperties(String path) {
+		propertiesPath = path;
+		InputStream inputStream = getClass().getResourceAsStream(propertiesPath);
+		Properties properties = new Properties();
+		try {
+			properties.load(inputStream);
+			DATASOURCE_URL = properties.getProperty("DATASOURCE_URL");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    public String URL;
-    public String PORT;
-    public String DATABASE;
-    public String USER_NAME;
-    public String USER_PASSWORD;
+	public static DBProperties getDBProperties() {
+		if (DBProperties.instance == null) {
+			DBProperties.instance = new DBProperties();
+		}
+		return DBProperties.instance;
+	}
 
-    
+	public static String DATASOURCE_URL;
 }
