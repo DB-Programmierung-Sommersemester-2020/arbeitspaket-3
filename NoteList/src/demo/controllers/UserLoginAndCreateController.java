@@ -7,18 +7,18 @@ import java.util.Optional;
 import demo.model.User;
 import demo.repositories.implementations.UserRepository;
 
-public class UserController {
-	private static UserController instance = new UserController();
+public class UserLoginAndCreateController {
+	private static UserLoginAndCreateController instance = new UserLoginAndCreateController();
 	private Map<String, User> users = new HashMap<>();
 	private int userIdCounter = 1;
 
-	private UserController() {
+	private UserLoginAndCreateController() {
 		super();
 		fillUsersMap();
 	}
 
-	public static UserController getInstance() {
-		return UserController.instance;
+	public static UserLoginAndCreateController getInstance() {
+		return UserLoginAndCreateController.instance;
 	}
 	
 	private void fillUsersMap() {
