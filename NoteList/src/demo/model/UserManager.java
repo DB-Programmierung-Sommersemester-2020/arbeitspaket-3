@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import demo.repositories.implementations.UserRepository;
+import demo.repositories.services.CRUDRepository;
+
 public class UserManager
 {
    private static UserManager instance = new UserManager();
-
+   
    public static UserManager getInstance()
    {
       return UserManager.instance;
@@ -37,6 +40,7 @@ public class UserManager
       {
          User user = new User(userIdCounter,username, password, email);
          this.users.put(username, user);
+         UserRepository.getInstance().create(user);
          userIdCounter++;
          return user;
       }
