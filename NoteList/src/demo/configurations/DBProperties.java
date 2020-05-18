@@ -32,5 +32,5 @@ public class DBProperties {
 		return DBProperties.instance;
 	}
 
-	public static String DATASOURCE_URL;
+	public String DATASOURCE_URL;
 }
