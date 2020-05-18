@@ -104,6 +104,8 @@ public class UserRepository implements UserRepositoryService {
 				statement.setString(1, user.getUsername());
 				statement.setString(2, user.getPassword()); // TODO: anpassen gemaes Aufgabe
 				statement.setString(3, user.getEmail());
+				statement.setInt(3, user.getId());
+				
 				count = statement.executeUpdate();
 
 				statement.close();
