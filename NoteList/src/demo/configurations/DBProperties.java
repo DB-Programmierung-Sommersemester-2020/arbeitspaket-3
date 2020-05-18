@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class DBProperties {
 
-	private String propertiesPath = "./../../config/database.properties";
+	private String propertiesPath = "./../../config/database.properties"; //TODO: replace with getPath() => of properties file etc.
 	private static DBProperties instance = null;
 
 	private DBProperties() {
