@@ -43,8 +43,8 @@ public class UserRepository implements UserRepositoryService {
 			PreparedStatement statement = connection.prepareStatement(insertString);
 
 			statement.setString(1, user.getUsername());
-			statement.setString(3, user.getPassword()); // TODO: adjust visibility/security.
-			statement.setString(1, user.getEmail());
+			statement.setString(2, user.getPassword()); // TODO: adjust visibility/security.
+			statement.setString(3, user.getEmail());
 			count = statement.executeUpdate();
 
 			statement.close();
