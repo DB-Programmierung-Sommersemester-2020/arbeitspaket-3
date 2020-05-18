@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import demo.repositories.implementations.UserRepository;
-import demo.repositories.services.CRUDRepository;
 
 public class UserManager
 {
