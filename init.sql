@@ -14,3 +14,8 @@ CREATE TABLE Notes (id INT PRIMARY KEY AUTO_INCREMENT,
                     content VARCHAR(1024),
                     date VARCHAR(100),
                     userId INT);
+
+CREATE TABLE Passwords (id INT PRIMARY KEY,
+                    pwdhash BLOB,
+                    salt BLOB
+                    );
