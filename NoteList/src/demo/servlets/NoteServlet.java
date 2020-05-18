@@ -2,7 +2,9 @@ package demo.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.servlet.RequestDispatcher;
@@ -15,9 +17,12 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import demo.controllers.UserController;
 import demo.controllers.UserLoginAndCreateController;
 import demo.model.Note;
 import demo.model.User;
+import demo.repositories.implementations.NoteRepository;
+import demo.repositories.implementations.UserRepository;
 
 
 @WebServlet("/Notes")
@@ -26,7 +31,7 @@ public class NoteServlet extends HttpServlet
    private static final long serialVersionUID = 1L;
 
    private UserLoginAndCreateController userLoginController = UserLoginAndCreateController.getInstance();
-
+   private UserController userController = new UserController(UserRepository.getInstance(), NoteRepository.getInstance());
    private Gson gson = new Gson();
 
    public NoteServlet()
@@ -41,7 +46,12 @@ public class NoteServlet extends HttpServlet
       if (user.isPresent())
       {
          List<Note> notes = user.get().getNotes();
-
+         List<Note> dbNotes = userController.getAllNotesOfUser(user.get());
+         if(notes.isEmpty() || (notes.size() != dbNotes.size())) {
+        	 if(!dbNotes.isEmpty()) {
+        		 notes = dbNotes;
+        	 }
+         }
          String jsonString = gson.toJson(notes);
          response.setContentType("text/json");
          PrintWriter out = response.getWriter();
@@ -71,7 +81,15 @@ public class NoteServlet extends HttpServlet
       if (user.isPresent())
       {
          user.get().addNote(subject, content);
-         response.setStatus(HttpServletResponse.SC_OK);
+         
+         Note lastInsertedNote = NoteRepository.getInstance().getAll()
+        		 .stream().max(Comparator.comparing(Note::getId))
+                 .orElseThrow(NoSuchElementException::new);
+         int nextId = lastInsertedNote.getId() + 1;
+         
+         if(userController.saveNoteOfUser(user.get(), new Note(nextId,subject,content))){
+        	 response.setStatus(HttpServletResponse.SC_OK);
+         }
       }
       else
       {
@@ -85,7 +103,10 @@ public class NoteServlet extends HttpServlet
       if (user.isPresent())
       {
          user.get().removeAllNotes();
-         response.setStatus(HttpServletResponse.SC_OK);
+         if(userController.removeAllNotesOfUser(user.get())) {
+        	 response.setStatus(HttpServletResponse.SC_OK);
+         }
+         
       }
       else
       {
