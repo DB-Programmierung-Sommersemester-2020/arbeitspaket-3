@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import demo.controllers.UserController;
 import demo.model.User;
 import demo.model.UserManager;
 
@@ -19,7 +20,7 @@ public class RegisterServlet extends HttpServlet
 {
    private static final long serialVersionUID = 1L;
 
-   private UserManager userManager = UserManager.getInstance();
+   private UserController userController= UserController.getInstance();
 
    public RegisterServlet()
    {
@@ -43,14 +44,14 @@ public class RegisterServlet extends HttpServlet
          return;
       }
 
-      Optional<User> optUser = userManager.lookupUser(username);
+      Optional<User> optUser = userController.lookupUser(username);
       if (optUser.isPresent())
       {
          error(request, response, "Benutzername existiert bereits");
          return;
       }
 
-      User user = userManager.register(username, password, email);
+      User user = userController.register(username, password, email);
 
       HttpSession session = request.getSession();
       session.setAttribute("User", user);
