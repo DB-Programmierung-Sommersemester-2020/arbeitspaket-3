@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import demo.controllers.UserController;
 import demo.model.User;
-import demo.model.UserManager;
+
 
 @WebServlet("/Register")
 public class RegisterServlet extends HttpServlet
