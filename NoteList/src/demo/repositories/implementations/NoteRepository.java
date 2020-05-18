@@ -14,6 +14,19 @@ import demo.repositories.services.NotesRepositoryService;
 
 public class NoteRepository implements NotesRepositoryService{
 
+	private static NoteRepository instance = null;
+	
+	private NoteRepository() {
+		
+	}
+	
+	public static NoteRepository getInstance() {
+		if(instance == null) {
+			instance = new NoteRepository();
+		}
+		return instance;
+	}
+	
 	@Override
 	public boolean create(Note note) {
 		String insertString = "INSERT INTO Notes(subject, content, date) VALUES(?,?,NOW())";
