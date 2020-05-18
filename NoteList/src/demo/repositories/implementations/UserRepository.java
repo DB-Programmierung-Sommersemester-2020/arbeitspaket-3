@@ -14,6 +14,19 @@ import demo.repositories.services.UserRepositoryService;
 
 public class UserRepository implements UserRepositoryService {
 
+	private static UserRepository instance = null;
+
+	private UserRepository() {
+
+	}
+
+	public static UserRepository getInstance() {
+		if (instance == null) {
+			instance = new UserRepository();
+		}
+		return instance;
+	}
+
 	@Override
 	public boolean create(User user) {
 
@@ -107,25 +120,25 @@ public class UserRepository implements UserRepositoryService {
 
 	@Override
 	public boolean delete(User user) {
-		String deleteString = "DELETE FROM Users WHERE id = ? AND username = ? AND email = ?"; 
-        int count = 0;
-        boolean isDeleted = false;
-        try {
-        	Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(deleteString);
-            statement.setInt(1, user.getId());
-            statement.setString(2, user.getUsername());
+		String deleteString = "DELETE FROM Users WHERE id = ? AND username = ? AND email = ?";
+		int count = 0;
+		boolean isDeleted = false;
+		try {
+			Connection connection = DBConnection.getInstance().getConnection();
+			PreparedStatement statement = connection.prepareStatement(deleteString);
+			statement.setInt(1, user.getId());
+			statement.setString(2, user.getUsername());
 			statement.setString(3, user.getEmail());
-			
+
 			count = statement.executeUpdate();
-            statement.close();
-            connection.close();
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        isDeleted = (count >0) ? true : false;
-        return isDeleted;
+			statement.close();
+			connection.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		isDeleted = (count > 0) ? true : false;
+		return isDeleted;
 	}
 
 }
