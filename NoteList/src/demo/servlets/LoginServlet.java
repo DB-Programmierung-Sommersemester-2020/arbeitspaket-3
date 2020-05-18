@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import demo.controllers.UserController;
+import demo.controllers.UserLoginAndCreateController;
 import demo.model.User;
 
 
@@ -20,7 +20,7 @@ public class LoginServlet extends HttpServlet
 {
    private static final long serialVersionUID = 1L;
    
-   private UserController userController = UserController.getInstance();
+   private UserLoginAndCreateController userLoginController = UserLoginAndCreateController.getInstance();
 
    public LoginServlet()
    {
@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet
 	      return;
 	   }
 	   
-	   Optional<User> optUser = userController.lookupUser(username); 
+	   Optional<User> optUser = userLoginController.lookupUser(username); 
 	   if( optUser.isPresent() )
 	   {
 	      User user = optUser.get();

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import demo.controllers.UserController;
+import demo.controllers.UserLoginAndCreateController;
 import demo.model.Note;
 import demo.model.User;
 
@@ -25,7 +25,7 @@ public class NoteServlet extends HttpServlet
 {
    private static final long serialVersionUID = 1L;
 
-   private UserController userController = UserController.getInstance();
+   private UserLoginAndCreateController userLoginController = UserLoginAndCreateController.getInstance();
 
    private Gson gson = new Gson();
 
@@ -103,7 +103,7 @@ public class NoteServlet extends HttpServlet
          error(request, response, "Kein Benutzer gefunden");
          return Optional.empty();
       }
-      else if (!this.userController.lookupUser(user.getUsername()).isPresent())
+      else if (!this.userLoginController.lookupUser(user.getUsername()).isPresent())
       {
          error(request, response, "Benutzername nicht gefunden");
          return Optional.empty();
