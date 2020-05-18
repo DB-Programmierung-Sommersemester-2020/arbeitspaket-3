@@ -1,23 +1,24 @@
-package demo.model;
+package demo.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import demo.model.User;
 import demo.repositories.implementations.UserRepository;
 
-public class UserManager {
-	private static UserManager instance = new UserManager();
+public class UserController {
+	private static UserController instance = new UserController();
 	private Map<String, User> users = new HashMap<>();
 	private int userIdCounter = 1;
 
-	private UserManager() {
+	private UserController() {
 		super();
 		fillUsersMap();
 	}
 
-	public static UserManager getInstance() {
-		return UserManager.instance;
+	public static UserController getInstance() {
+		return UserController.instance;
 	}
 	
 	private void fillUsersMap() {
