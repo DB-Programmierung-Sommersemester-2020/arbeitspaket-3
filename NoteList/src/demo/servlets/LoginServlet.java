@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import demo.controllers.UserLoginAndCreateController;
 import demo.model.User;
+import demo.repositories.implementations.PasswordRepository;
 
 
 @WebServlet("/Login")
@@ -48,7 +49,8 @@ public class LoginServlet extends HttpServlet
 	   if( optUser.isPresent() )
 	   {
 	      User user = optUser.get();
-	      if( user.getPassword().equals(password) == false )
+	      
+	      if(!userLoginController.checkPassword(user, password))
 	      {
 	         error(request,response, "Password nicht korrekt");
 	         return;
